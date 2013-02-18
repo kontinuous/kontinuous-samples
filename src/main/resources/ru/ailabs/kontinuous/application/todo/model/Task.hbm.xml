@@ -1,0 +1,11 @@
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ru.ailabs.kontinuous.application.todo.model.Task">
+        <id name="id"/>
+        <property name="name"/>
+    </class>
+</hibernate-mapping>
