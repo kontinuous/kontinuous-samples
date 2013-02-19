@@ -14,5 +14,5 @@ class Task {
     }
     public var id : String? = null
     public var name : String? = null
-    public var status = Status.pending
+    public var status : Status = Status.pending
 }
