@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="kanban">
+<head>
+  <title>Kanban Tracker</title>
+  <!-- Included CSS Files (Compressed) -->
+  <link rel="stylesheet" href="stylesheets/foundation.min.css" />
+  <link rel="stylesheet" href="stylesheets/jquery-ui-1.10.1.custom.css">
+  <link rel="stylesheet" href="stylesheets/app.css" />
+  <link rel="stylesheet" href="stylesheets/angular-ui.css" />
+
+  <script src="js/lib/jquery-1.7.2.js"></script>
+  <script src="js/lib/jquery-ui-1.8.18.js"></script>
+  <script src="js/lib/angular.js" ></script>
+  <script src="js/lib/angular-ui.js"></script>
+  <script src="js/kanban.js"></script>
+</head>
+<body>
+
+  <div ng-controller="TaskCtrl">
+
+    <div class="four columns panel" ng-repeat="task_group in tasks">
+      <h1>{{task_group.name}}</h1>
+      <p>Total {{total(task_group.name)}}</p>
+
+      <ul class="tasks" ui-sortable="{connectWith:'.tasks', dropOnEmpty: true}" ng-model="task_group.tasks">
+        <li ng-repeat="task in task_group.tasks">
+          <span>{{task.text}}</span>
+        </li>
+      </ul>
+    </div>
+
+    <form ng-submit="addTodo()">
+      <input type="text" ng-model="todoText"  size="30"
+             placeholder="add new task here">
+      <input class="btn-primary" type="submit" value="add">
+    </form>
+  </div>
+</body>
+</html>
