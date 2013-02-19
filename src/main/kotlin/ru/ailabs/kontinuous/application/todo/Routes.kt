@@ -1,7 +1,8 @@
 package ru.ailabs.kontinuous.application.todo
 
-import ru.ailabs.kontinuous.annotation.path
+import ru.ailabs.kontinuous.annotation.GET
 import ru.ailabs.kontinuous.annotation.routes
+import ru.ailabs.kontinuous.annotation.POST
 
 /**
  * User: andrew
@@ -10,5 +11,7 @@ import ru.ailabs.kontinuous.annotation.routes
  */
 
 routes class Routes {
-    path("/")  val index = TaskController.index
+    GET("/tasks")  val list = TaskController.list
+    POST("/tasks")  val create = TaskController.create
+    POST("/tasks/:id")  val update = TaskController.update
 }

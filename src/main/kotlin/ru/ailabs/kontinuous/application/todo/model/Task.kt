@@ -1,7 +1,5 @@
 package ru.ailabs.kontinuous.application.todo.model
 
-import javax.persistence.Id
-
 /**
  * User: andrew
  * Date: 18.02.13
@@ -9,6 +7,12 @@ import javax.persistence.Id
  */
 
 class Task {
+    public enum class Status {
+        pending
+        inProgress
+        done
+    }
     public var id : String? = null
     public var name : String? = null
+    public var status = Status.pending
 }

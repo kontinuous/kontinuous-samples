@@ -5,7 +5,10 @@
 
 <hibernate-mapping>
     <class name="ru.ailabs.kontinuous.application.todo.model.Task">
-        <id name="id"/>
+        <id name="id" unsaved-value="null">
+            <generator class="org.hibernate.id.UUIDGenerator"/>
+        </id>
         <property name="name"/>
+        <property name="status"/>
     </class>
 </hibernate-mapping>
