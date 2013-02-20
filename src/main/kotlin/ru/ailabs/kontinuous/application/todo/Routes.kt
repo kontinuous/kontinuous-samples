@@ -16,4 +16,5 @@ routes class Routes {
     POST("/tasks")  val create = TaskController.create
     POST("/tasks/:id")  val update = TaskController.update
     GET("/assets/*file") val assets = AssetController.at
+    GET("/") val root = TaskController.root
 }

@@ -8,6 +8,7 @@ import ru.ailabs.kontinuous.application.todo.model.Task
 import ru.ailabs.kontinuous.controller.Action
 import ru.ailabs.kontinuous.controller.Ok
 import ru.ailabs.kontinuous.controller.helper.render_json
+import ru.ailabs.kontinuous.controller.Redirect
 
 /**
  * User: andrew
@@ -16,6 +17,11 @@ import ru.ailabs.kontinuous.controller.helper.render_json
  */
 
 object TaskController {
+
+    val root = Action ({
+        Redirect("/assets/index.html")
+    })
+
     val create = Action ({ context ->
         val mapper = ObjectMapper()
         var task = mapper.readValue(context.body, javaClass<Task>())
