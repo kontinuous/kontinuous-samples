@@ -25,7 +25,7 @@
       <p>Total {{groupped[status.name].length}}</p>
 
       <ul class="tasks" ui-sortable="{connectWith:'.tasks', dropOnEmpty: true, update: syncModel}" ng-model="groupped[status.name]">
-        <li ng-repeat="task in groupped[status.name]" issue_id="{{task.id}}">
+        <li ng-repeat="task in groupped[status.name]"">
           <span>{{task.name}}</span>
         </li>
       </ul>
