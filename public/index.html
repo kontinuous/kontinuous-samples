@@ -22,7 +22,7 @@
     <p>{{groupped}}</p>
     <div class="four columns panel" ng-repeat="status in statuses">
       <h1>{{status.name}}</h1>
-      <p>Total {{issues.length}}</p>
+      <p>Total {{groupped[status.name].length}}</p>
 
       <ul class="tasks" ui-sortable="{connectWith:'.tasks', dropOnEmpty: true, update: syncModel}" ng-model="groupped[status.name]">
         <li ng-repeat="task in groupped[status.name]" issue_id="{{task.id}}">
