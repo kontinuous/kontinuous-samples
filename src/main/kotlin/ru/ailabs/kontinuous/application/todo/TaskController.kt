@@ -32,13 +32,13 @@ object TaskController {
 
     val list =  Action ({ context ->
         val query : Query? = context.session.createQuery("from Task")
-        val map = HashMap<Task.Status, HashSet<Task>>()
+        //val map = HashMap<Task.Status, HashSet<Task>>()
         val list = query?.list() as List<out Any>
-        list forEach {(it: Any) ->
+        /*list forEach {(it: Any) ->
             val task = it as Task
             val tasks = map.getOrPut(task.status, {HashSet<Task>()})
             tasks.add(task)
-        }
-        Ok(render_json(map))
+        }*/
+        Ok(render_json(list))
     })
 }

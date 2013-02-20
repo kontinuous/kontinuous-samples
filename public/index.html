@@ -12,19 +12,21 @@
   <script src="js/lib/jquery-ui-1.8.18.js"></script>
   <script src="js/lib/angular.js" ></script>
   <script src="js/lib/angular-ui.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/angular-resource.js"></script>
   <script src="js/kanban.js"></script>
 </head>
 <body>
 
   <div ng-controller="TaskCtrl">
+    <p>{{groupped}}</p>
+    <div class="four columns panel" ng-repeat="status in statuses">
+      <h1>{{status.name}}</h1>
+      <p>Total {{issues.length}}</p>
 
-    <div class="four columns panel" ng-repeat="task_group in tasks">
-      <h1>{{task_group.name}}</h1>
-      <p>Total {{total(task_group.name)}}</p>
-
-      <ul class="tasks" ui-sortable="{connectWith:'.tasks', dropOnEmpty: true}" ng-model="task_group.tasks">
-        <li ng-repeat="task in task_group.tasks">
-          <span>{{task.text}}</span>
+      <ul class="tasks" ui-sortable="{connectWith:'.tasks', dropOnEmpty: true, update: syncModel}" ng-model="groupped[status.name]">
+        <li ng-repeat="task in groupped[status.name]" issue_id="{{task.id}}">
+          <span>{{task.name}}</span>
         </li>
       </ul>
     </div>
