@@ -6,7 +6,7 @@ package ru.ailabs.kontinuous.application.todo.model
  * Time: 10:35
  */
 
-class Task {
+data class Task {
     public enum class Status {
         pending
         inProgress
