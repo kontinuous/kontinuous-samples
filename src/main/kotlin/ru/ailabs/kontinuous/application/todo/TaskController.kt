@@ -9,6 +9,7 @@ import ru.ailabs.kontinuous.controller.Action
 import ru.ailabs.kontinuous.controller.Ok
 import ru.ailabs.kontinuous.controller.helper.render_json
 import ru.ailabs.kontinuous.controller.Redirect
+import ru.ailabs.kontinuous.controller.Cookie
 
 /**
  * User: andrew
@@ -17,6 +18,12 @@ import ru.ailabs.kontinuous.controller.Redirect
  */
 
 object TaskController {
+
+    val st = Action({ context ->
+        println(context.userSession.get("user_id"))
+        context.userSession.set("user_id", "khamutov")
+        Ok("cookie setted").withCookies(Cookie("mu_cookie", "12345"))
+    })
 
     val root = Action ({
         Redirect("/assets/index.html")

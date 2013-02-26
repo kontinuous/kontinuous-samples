@@ -14,6 +14,7 @@ class SampleApplication: Application() {
 
     {
         add {
+            get("/st", TaskController.st)
             get("/tasks", TaskController.list)
             post("/tasks", TaskController.create)
             post("/tasks/:id", TaskController.update)
