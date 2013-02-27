@@ -12,7 +12,8 @@ data class Task {
         inProgress
         done
     }
-    public var id : Long? = null
-    public var name : String? = null
-    public var status : Status = Status.pending
+    public var id: Long? = null
+    public var name: String? = null
+    public var status: Status = Status.pending
+    public var user: User? = null
 }

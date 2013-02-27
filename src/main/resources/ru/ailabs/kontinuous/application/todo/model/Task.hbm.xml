@@ -10,5 +10,10 @@
         </id>
         <property name="name"/>
         <property name="status"/>
+        <many-to-one name="user"/>
+    </class>
+    <class name="ru.ailabs.kontinuous.application.todo.model.User">
+        <id name="name" unsaved-value="null"/>
+        <property name="password"/>
     </class>
 </hibernate-mapping>
