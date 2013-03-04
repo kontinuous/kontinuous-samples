@@ -1,5 +1,5 @@
 <form action="/users" method="post">
-    <p>Name: <input type="text" name="user"></p>
-    <p>Passowrd: <input type="password" name="pass"></p>
+    <p>Name: <input type="text" name="user" value='<%= binding.variables.containsKey("user") ? user.name : "" %>'></p>
+    <p>Passowrd: <input type="password" name="pass" value='<%= binding.variables.containsKey("user") ? user.password : "" %>'></p>
     <p><input type="submit" value="Create" name="submit"></p>
 </form>

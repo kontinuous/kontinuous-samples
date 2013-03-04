@@ -16,18 +16,29 @@ class SampleApplication: Application() {
     {
         add {
             authenticated("/login") {
-//                get("/st", TaskController.st)
-                get("/tasks", TaskController.list)
-                post("/tasks", TaskController.create)
-                post("/tasks/:id", TaskController.update)
+
                 get("/", TaskController.root)
+
+                get("/boards/:bid/tasks", TaskController.list)
+                post("/boards/:bid/tasks", TaskController.create)
+                post("/boards/:bid/tasks/:tid", TaskController.update)
+
+                //user
+                get("/users", UserController.list)
+                get("/users/:uid", UserController.show)
+                get("/users/:uid/edit", UserController.edit)
+                post("/users/:uid", UserController.update)
+                get("/users/new", UserController.new)
+                post("/users", UserController.create)
+
+                get("/boards/:bid", BoardController.show)
+                post("/boards/:bid/share", BoardController.share)
+                post("/boards", BoardController.create)
+
             }
-            get("/logout", UserController.logout)
-            get("/login", UserController.loginGet)
-            post("/login", UserController.loginPost)
-            get("/users", UserController.list)
-            get("/users/new", UserController.new)
-            post("/users", UserController.create)
+            get("/logout", LoginController.logout)
+            get("/login", LoginController.loginGet)
+            post("/login", LoginController.loginPost)
         }
     }
 }

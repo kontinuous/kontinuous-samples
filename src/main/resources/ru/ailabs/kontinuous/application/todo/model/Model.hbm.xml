@@ -11,10 +11,29 @@
         </id>
         <property name="name"/>
         <property name="status"/>
-        <many-to-one name="user"/>
+        <many-to-one name="board"/>
     </class>
     <class name="ru.ailabs.kontinuous.application.todo.model.User">
         <id name="name" unsaved-value="null"/>
         <property name="password"/>
+        <set name="theirsBoards" table="user_board">
+            <key column="user_name"/>
+            <many-to-many class="ru.ailabs.kontinuous.application.todo.model.Board" column="board_id"/>
+        </set>
+        <set name="boards" inverse="true">
+            <key column="owner"/>
+            <one-to-many class="ru.ailabs.kontinuous.application.todo.model.Board"/>
+        </set>
+    </class>
+    <class name="ru.ailabs.kontinuous.application.todo.model.Board">
+        <id name="id" unsaved-value="null">
+            <generator class="org.hibernate.id.MultipleHiLoPerTableGenerator"/>
+        </id>
+        <property name="name"/>
+        <many-to-one name="owner"/>
+        <set name="sharedUsers" inverse="true" table="user_board">
+            <key column="board_id"/>
+            <many-to-many class="ru.ailabs.kontinuous.application.todo.model.User" column="user_name"/>
+        </set>
     </class>
 </hibernate-mapping>

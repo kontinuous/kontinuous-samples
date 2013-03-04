@@ -32,14 +32,14 @@ object TaskController {
 
     val create = Action ({ context ->
         var task = context.body.asJson(javaClass<Task>())
-        task!!.user = context.session.get(javaClass<User>(), context.userSession.getUserId() as Serializable) as User
+//        task!!.user = context.session.get(javaClass<User>(), context.userSession.getUserId() as Serializable) as User
         context.session.save(task)
         Ok(render_json(task!!))
     })
 
     val update = Action ({ context ->
         var task = context.body.asJson(javaClass<Task>())
-        task!!.user = context.session.get(javaClass<User>(), context.userSession.getUserId() as Serializable) as User
+//        task!!.user = context.session.get(javaClass<User>(), context.userSession.getUserId() as Serializable) as User
         context.session.saveOrUpdate(task)
         Ok(render_json(task!!))
     })

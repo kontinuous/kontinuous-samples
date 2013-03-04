@@ -1,0 +1,16 @@
+<p>Name: <%= user.name %> </p>
+<p>Owned:</p>
+<ul>
+    <% for(board in user.boards) { %>
+    <li><a href="/boards/${board.id}"> <%= board.name %> </a></li>
+    <% } %>
+</ul>
+<p>Theis:</p>
+<ul>
+    <% for(board in user.theirsBoards) { %>
+    <li><a href="/boards/${board.id}"> <%= board.name %> </a></li>
+    <% } %>
+</ul>
+<form action="/boards" method="post">
+    <p>Board name: <input name="name" type="text"><input type="submit" value="Add" name="submit"></p>
+</form>

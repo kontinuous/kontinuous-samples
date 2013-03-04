@@ -1,0 +1,4 @@
+<p>Name: <%= board.name %> </p>
+<form action="/boards/${board.id}/share" method="post">
+    <p>User name: <input name="user" type="text"><input type="submit" value="Share" name="submit"></p>
+</form>

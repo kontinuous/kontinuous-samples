@@ -15,5 +15,5 @@ data class Task {
     public var id: Long? = null
     public var name: String? = null
     public var status: Status = Status.pending
-    public var user: User? = null
+    public var board: Board? = null
 }

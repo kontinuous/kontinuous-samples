@@ -19,6 +19,31 @@ import ru.ailabs.kontinuous.auth.unauthenticate
 
 object UserController {
 
+    val list = Action({ ctx ->
+        val query = ctx.session.createQuery("from User")
+        val list = query?.list() as List<out User>
+        Ok(render("user/list.tmpl.html", hashMapOf("users" to list)))
+    })
+
+    val show = Action({ ctx ->
+        val user = ctx.session.get(javaClass<User>(), ctx.namedParameters["uid"] as Serializable) as User
+        Ok(render("user/show.tmpl.html", hashMapOf("user" to user)))
+    })
+
+    val update = Action({ ctx ->
+        val user = ctx.session.get(javaClass<User>(), ctx.namedParameters["uid"] as Serializable) as User
+        val form = ctx.body.asMap()
+        user.name = form["user"];
+        user.password = form["pass"];
+        ctx.session.save(user);
+        Redirect("/users/${user.name}")
+    })
+
+    val edit = Action({ ctx ->
+        val user = ctx.session.get(javaClass<User>(), ctx.namedParameters["uid"] as Serializable) as User
+        Ok(render("user/new.tmpl.html", hashMapOf("users" to list)))
+    })
+
     val new = Action({
         Ok(render("user/new.tmpl.html"))
     })
@@ -29,37 +54,6 @@ object UserController {
         user.name = form["user"];
         user.password = form["pass"];
         ctx.session.save(user)
-        Redirect("/login")
+        Redirect("/users/${user.name}")
     })
-
-    val list = Action({ ctx ->
-        val query = ctx.session.createQuery("from User")
-        val list = query?.list() as List<out User>
-        Ok(render("user/list.tmpl.html", hashMapOf("users" to list)))
-    })
-
-    val loginGet = Action({ ctx ->
-        Ok(render("user/login.tmpl.html"))
-    })
-
-    val loginPost = Action({ ctx ->
-        val form = ctx.body.asMap()
-        val user = ctx.session.get(javaClass<User>(), form["user"] as Serializable) as User
-        if(user == null) {
-            Redirect("/login")
-        } else {
-            if (form["pass"] == user.password) {
-                ctx.userSession.authenticate(user.name!!)
-                Redirect("/")
-            } else {
-                Redirect("/login")
-            }
-        }
-    })
-
-    val logout = Action({ ctx ->
-        ctx.userSession.unauthenticate()
-        Redirect("/login")
-    })
-
 }
