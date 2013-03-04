@@ -4,9 +4,10 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
+    
     <class name="ru.ailabs.kontinuous.application.todo.model.Task">
         <id name="id" unsaved-value="null">
-            <generator class="org.hibernate.id.SequenceGenerator"/>
+            <generator class="org.hibernate.id.MultipleHiLoPerTableGenerator"/>
         </id>
         <property name="name"/>
         <property name="status"/>
