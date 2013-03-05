@@ -33,8 +33,8 @@ class SampleApplication: Application() {
 
                 get("/boards", BoardController.list)
                 get("/boards/:bid", BoardController.show)
+                get("/boards/:bid/shared_with", BoardController.shared)
                 post("/boards/:bid", BoardController.update)
-                post("/boards/:bid/share", BoardController.share)
                 post("/boards", BoardController.create)
 
             }

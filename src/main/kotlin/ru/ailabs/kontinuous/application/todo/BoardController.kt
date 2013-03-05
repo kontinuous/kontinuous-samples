@@ -13,6 +13,7 @@ import ru.ailabs.kontinuous.application.todo.model.Board
 import ru.ailabs.kontinuous.application.todo.model.User
 import java.io.Serializable
 import ru.ailabs.kontinuous.controller.helper.render
+import java.util.HashMap
 
 /**
  * User: andrew
@@ -39,11 +40,31 @@ object BoardController {
     })
 
     val update = Action ({ context ->
-        val newBoard = context.body.asJson(javaClass<Board>())
-        val oldBoard = context.session.get(javaClass<Board>(), newBoard!!.id as Serializable) as Board
+        val newBoard = context.body.asJson(javaClass<Board>())!!
+        val oldBoard = context.session.get(javaClass<Board>(), newBoard.id as Serializable) as Board
         oldBoard.name = newBoard.name
-        context.session.saveOrUpdate(oldBoard)
-        Ok(render_json(oldBoard!!))
+
+        for(sharedUser in oldBoard.sharedUsers) {
+            val find = newBoard.sharedUsers.filter { user -> user.name == sharedUser.name }
+            if(find.count() == 0) {
+                oldBoard.sharedUsers.remove(sharedUser)
+            }
+        }
+        context.session.flush()
+        context.session.refresh(oldBoard)
+
+        for(sharedUser in newBoard.sharedUsers) {
+            val find = oldBoard.sharedUsers.filter { user -> user.name == sharedUser.name }
+            if(find.count() == 0) {
+                val userName = sharedUser.name
+                val user = context.session.get(javaClass<User>(), userName as Serializable) as User
+                oldBoard.sharedUsers.add(user)
+            }
+        }
+
+        context.session.save(oldBoard)
+        context.session.flush()
+        Ok(render_json(oldBoard))
     })
 
     val show = Action ({ context ->
@@ -51,12 +72,9 @@ object BoardController {
         Ok(render_json(board))
     })
 
-    val share = Action ({ context ->
-        val form = context.body.asMap()
+    val shared = Action ({ context ->
         val board = context.session.get(javaClass<Board>(), context.namedParameters["bid"]!!.toLong() as Serializable) as Board
-        val user = context.session.get(javaClass<User>(), form["user"] as Serializable) as User
-        user.theirsBoards.add(board)
-        context.session.save(user)
-        Ok(render("board/show.tmpl.html", hashMapOf("board" to board)))
+        val sharedWith = board.sharedUsers
+        Ok(render_json(sharedWith))
     })
 }

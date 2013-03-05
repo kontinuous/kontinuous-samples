@@ -13,10 +13,13 @@ function BoardCtrl($scope, Board) {
   };
 }
 
-function BoardEditCtrl($scope, Board, $routeParams, $location) {
+function BoardEditCtrl($scope, Board, $routeParams, $location, User, $http) {
 
   $scope.boardId = $routeParams.boardId;
+
   $scope.board = Board.get({boardId: $scope.boardId});
+
+  $scope.users = User.query();
 
   $scope.editorEnabled = false;
 
@@ -35,6 +38,13 @@ function BoardEditCtrl($scope, Board, $routeParams, $location) {
   $scope.disableEditor = function() {
     $scope.editorEnabled = false;
   };
+
+  $scope.syncModel = function (e, ui) {
+    //$scope.board.$save({boardId: $scope.boardId});
+    if(ui.sender) {
+      $scope.board.$save({boardId: $scope.boardId});
+    }
+  }
 }
 
 function TaskCtrl($scope, Task, $routeParams) {

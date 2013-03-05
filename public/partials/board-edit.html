@@ -1,22 +1,45 @@
 <div ng-controller="BoardEditCtrl">
-  <div ng-hide="editorEnabled">
-    {{board.name}}
-    <a ng-click="enableEditor()">Edit</a>
-  </div>
-  <div ng-show="editorEnabled">
-    <form name="boardForm">
-      <div class="large-6 columns">
-        <div class="row collapse">
-          <div class="small-10 columns">
-            <input type="text" name="input" ng-model="form_board_name"  size="30" placeholder="input name of board" required>
-            <small class="error" ng-show="boardForm.input.$error.required">Required!</small><br>
-          </div>
-          <div class="columns">
-            <a class="button prefix" ng-click="saveBoard()" ng-show="boardForm.$valid">Save</a>
-            <a class="button prefix alert" ng-click="disableEditor()">Cancel</a>
+  <div class="row">
+    <div ng-hide="editorEnabled">
+      {{board.name}}
+      <a ng-click="enableEditor()">Edit</a>
+    </div>
+    <div ng-show="editorEnabled">
+      <form name="boardForm">
+        <div class="large-6 columns">
+          <div class="row collapse">
+            <div class="small-10 columns">
+              <input type="text" name="input" ng-model="form_board_name"  size="30" placeholder="input name of board" required>
+              <small class="error" ng-show="boardForm.input.$error.required">Required!</small><br>
+            </div>
+            <div class="columns">
+              <a class="button prefix" ng-click="saveBoard()" ng-show="boardForm.$valid">Save</a>
+              <a class="button prefix alert" ng-click="disableEditor()">Cancel</a>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <h3>Shared with:</h3>
+      <ul class="tasks" ui-sortable="{connectWith:'.tasks', dropOnEmpty: true, update: syncModel}" ng-model="board.sharedUsers">
+        <li ng-repeat="shared in board.sharedUsers">
+          <span>{{shared.name}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="four columns">
+      <h3>Users:</h3>
+
+      <ul class="tasks" ui-sortable="{connectWith:'.tasks', dropOnEmpty: true, update: syncModel}" ng-model="users">
+        <li ng-repeat="user in users">
+          <span>{{user.name}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="four columns">
+    </div>
   </div>
 </div>

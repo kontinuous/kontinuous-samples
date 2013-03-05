@@ -9,6 +9,7 @@ import ru.ailabs.kontinuous.controller.Redirect
 import java.io.Serializable
 import ru.ailabs.kontinuous.auth.authenticate
 import ru.ailabs.kontinuous.auth.unauthenticate
+import ru.ailabs.kontinuous.controller.helper.render_json
 
 /**
  * User: andrew
@@ -22,7 +23,7 @@ object UserController {
     val list = Action({ ctx ->
         val query = ctx.session.createQuery("from User")
         val list = query?.list() as List<out User>
-        Ok(render("user/list.tmpl.html", hashMapOf("users" to list)))
+        Ok(render_json(list))
     })
 
     val show = Action({ ctx ->

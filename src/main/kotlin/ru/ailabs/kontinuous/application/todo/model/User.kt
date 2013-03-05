@@ -1,6 +1,7 @@
 package ru.ailabs.kontinuous.application.todo.model
 
 import java.util.HashSet
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 /**
  * User: andrew
@@ -10,7 +11,7 @@ import java.util.HashSet
 
 data class User {
     public var name : String? = null
-    public var password : String? = null
-    public var theirsBoards : java.util.Set<Board> = HashSet<Board>() as java.util.Set<Board>
-    public var boards : java.util.Set<Board> = HashSet<Board>() as java.util.Set<Board>
+    JsonIgnore public var password : String? = null
+    JsonIgnore public var theirsBoards : java.util.Set<Board> = HashSet<Board>() as java.util.Set<Board>
+    JsonIgnore public var boards : java.util.Set<Board> = HashSet<Board>() as java.util.Set<Board>
 }

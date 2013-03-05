@@ -31,7 +31,7 @@
         </id>
         <property name="name"/>
         <many-to-one name="owner"/>
-        <set name="sharedUsers" inverse="true" table="user_board">
+        <set name="sharedUsers" table="user_board">
             <key column="board_id"/>
             <many-to-many class="ru.ailabs.kontinuous.application.todo.model.User" column="user_name"/>
         </set>

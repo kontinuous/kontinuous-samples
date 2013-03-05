@@ -5,6 +5,9 @@ angular.module('kanbanServices', ['ngResource']).
     factory('Board', function($resource){
       return $resource('/boards/:boardId', {}, {});
     }).
+    factory('User', function($resource){
+      return $resource('/users/:userId', {}, {});
+    }).
     config(['$routeProvider', function($routeProvider) {
       $routeProvider.
           when('/boards', {templateUrl: 'partials/boards-list.html',   controller: BoardCtrl}).
