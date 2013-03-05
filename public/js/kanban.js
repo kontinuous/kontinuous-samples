@@ -18,11 +18,22 @@ function BoardEditCtrl($scope, Board, $routeParams, $location) {
   $scope.boardId = $routeParams.boardId;
   $scope.board = Board.get({boardId: $scope.boardId});
 
+  $scope.editorEnabled = false;
+
   $scope.saveBoard = function() {
+    $scope.board.name = $scope.form_board_name;
     $scope.board.$save({boardId: $scope.boardId}, function() {
-      $scope.boardName = '';
-      $location.path('#/boards');
+      $scope.disableEditor();
     });
+  };
+
+  $scope.enableEditor = function() {
+    $scope.editorEnabled = true;
+    $scope.form_board_name = $scope.board.name;
+  };
+
+  $scope.disableEditor = function() {
+    $scope.editorEnabled = false;
   };
 }
 

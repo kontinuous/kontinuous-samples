@@ -1,8 +1,22 @@
 <div ng-controller="BoardEditCtrl">
-  <form name="boardForm" ng-submit="saveBoard()">
-    <label>Board name:</label>
-    <input type="text" name="input" ng-model="board.name"  size="30" placeholder="input name of board" required>
-    <small class="error" ng-show="boardForm.input.$error.required">Required!</small><br>
-    <input class="button" type="submit" value="save" ng-show="boardForm.$valid">
-  </form>
+  <div ng-hide="editorEnabled">
+    {{board.name}}
+    <a ng-click="enableEditor()">Edit</a>
+  </div>
+  <div ng-show="editorEnabled">
+    <form name="boardForm">
+      <div class="large-6 columns">
+        <div class="row collapse">
+          <div class="small-10 columns">
+            <input type="text" name="input" ng-model="form_board_name"  size="30" placeholder="input name of board" required>
+            <small class="error" ng-show="boardForm.input.$error.required">Required!</small><br>
+          </div>
+          <div class="columns">
+            <a class="button prefix" ng-click="saveBoard()" ng-show="boardForm.$valid">Save</a>
+            <a class="button prefix alert" ng-click="disableEditor()">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
