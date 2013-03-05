@@ -1,0 +1,21 @@
+<div class="eight columns">
+  <h4>My Boards:</h4>
+  <div ng-controller="BoardCtrl">
+    <ul>
+      <li ng-repeat="board in boards">
+        <span><a href="#/boards/{{board.id}}">{{board.name}}</a></span>
+        <span><a href="#/boards/{{board.id}}/edit">Edit</a></span>
+      </li>
+    </ul>
+
+    <form ng-submit="addBoard()">
+      <input type="text" ng-model="boardName"  size="30"
+             placeholder="add new board name here">
+      <input class="btn-primary" type="submit" value="add">
+    </form>
+  </div>
+</div>
+<div class="four columns">
+  <h4>User info:</h4>
+  <p>Name: alex</p>
+</div>

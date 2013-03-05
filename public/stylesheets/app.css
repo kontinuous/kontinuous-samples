@@ -26,21 +26,18 @@
    Page Name 2
 ----------------------------------------- */
 
-li {
+ul.tasks li {
     padding: 5px;
     border: 1px solid #999;
     background: #eee;
     margin: 5px;
     cursor: move;
+    list-style-type: none;
 }
 
 ul.tasks {
   padding: 5px;
   background: #eee;
-}
-
-ul.tasks li {
-  list-style-type: none;
 }
 
 

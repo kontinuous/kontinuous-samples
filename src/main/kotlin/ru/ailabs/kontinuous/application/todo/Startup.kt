@@ -24,14 +24,16 @@ class SampleApplication: Application() {
                 post("/boards/:bid/tasks/:tid", TaskController.update)
 
                 //user
+                get("/users/new", UserController.new)
                 get("/users", UserController.list)
                 get("/users/:uid", UserController.show)
                 get("/users/:uid/edit", UserController.edit)
                 post("/users/:uid", UserController.update)
-                get("/users/new", UserController.new)
                 post("/users", UserController.create)
 
+                get("/boards", BoardController.list)
                 get("/boards/:bid", BoardController.show)
+                post("/boards/:bid", BoardController.update)
                 post("/boards/:bid/share", BoardController.share)
                 post("/boards", BoardController.create)
 

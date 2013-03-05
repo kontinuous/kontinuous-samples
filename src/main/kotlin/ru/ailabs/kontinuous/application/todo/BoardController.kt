@@ -22,18 +22,33 @@ import ru.ailabs.kontinuous.controller.helper.render
 
 object BoardController {
 
+    val list =  Action ({ context ->
+        val query : Query = context.session.createQuery("from Board board where board.owner.name = :user_id")!!
+        query.setString("user_id", context.userSession.getUserId())
+        //val map = HashMap<Task.Status, HashSet<Task>>()
+        val list = query?.list() as List<out Any>
+        Ok(render_json(list))
+    })
+
     val create = Action ({ context ->
-        val form = context.body.asMap()
-        val board = Board()
-        board.name = form["name"]
-        board.owner = context.session.get(javaClass<User>(), context.userSession.getUserId() as Serializable) as User
+        val board = context.body.asJson(javaClass<Board>())!!
+        val user = context.session.get(javaClass<User>(), context.userSession.getUserId() as Serializable) as User
+        board.owner = user
         context.session.save(board)
-        Redirect("/users/${board.owner!!.name}")
+        Ok(render_json(board))
+    })
+
+    val update = Action ({ context ->
+        val newBoard = context.body.asJson(javaClass<Board>())
+        val oldBoard = context.session.get(javaClass<Board>(), newBoard!!.id as Serializable) as Board
+        oldBoard.name = newBoard.name
+        context.session.saveOrUpdate(oldBoard)
+        Ok(render_json(oldBoard!!))
     })
 
     val show = Action ({ context ->
         val board = context.session.get(javaClass<Board>(), context.namedParameters["bid"]!!.toLong() as Serializable) as Board
-        Ok(render("board/show.tmpl.html", hashMapOf("board" to board)))
+        Ok(render_json(board))
     })
 
     val share = Action ({ context ->

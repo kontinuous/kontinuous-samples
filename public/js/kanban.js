@@ -1,9 +1,37 @@
 var myapp = angular.module('kanban', ['ui','kanbanServices']);
 
-function TaskCtrl($scope, Task) {
+function BoardCtrl($scope, Board) {
+
+  $scope.boards = Board.query();
+
+  $scope.addBoard = function() {
+    var newBoard = new Board({name:$scope.boardName});
+    newBoard.$save(function() {
+      $scope.boards = Board.query();
+    });
+    $scope.boardName = '';
+  };
+}
+
+function BoardEditCtrl($scope, Board, $routeParams, $location) {
+
+  $scope.boardId = $routeParams.boardId;
+  $scope.board = Board.get({boardId: $scope.boardId});
+
+  $scope.saveBoard = function() {
+    $scope.board.$save({boardId: $scope.boardId}, function() {
+      $scope.boardName = '';
+      $location.path('#/boards');
+    });
+  };
+}
+
+function TaskCtrl($scope, Task, $routeParams) {
+
+  $scope.boardId = $routeParams.boardId;
 
   $scope.updateModel = function() {
-    return Task.query(function(tasks, getResponseHeaders) {
+    return Task.query({boardId:$scope.boardId}, function(tasks, getResponseHeaders) {
       $scope.groupped = {}
       angular.forEach($scope.statuses, function(status) {
         $scope.groupped[status.name] = []
@@ -27,7 +55,7 @@ function TaskCtrl($scope, Task) {
 
   $scope.addTodo = function() {
     var newTask = new Task({name:$scope.todoText});
-    newTask.$save(function() {
+    newTask.$save({boardId:$scope.boardId}, function() {
       $scope.tasks = $scope.updateModel();
     });
     $scope.todoText = '';
@@ -39,7 +67,7 @@ function TaskCtrl($scope, Task) {
         if(task.status != status) {
           console.log(task);
           task.status = status;
-          task.$save({taskId:task.id});
+          task.$save({boardId:$scope.boardId, taskId:task.id});
         }
       });
     }
