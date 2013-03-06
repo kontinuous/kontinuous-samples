@@ -1,5 +1,4 @@
 <div ng-controller="TaskCtrl">
-  <p>{{groupped}}</p>
   <div class="four columns panel" ng-repeat="status in statuses">
     <h1>{{status.name}}</h1>
     <p>Total {{groupped[status.name].length}}</p>

@@ -18,24 +18,21 @@
 </head>
 <body>
 
-  <div ng-controller="TaskCtrl">
-    <p>{{groupped}}</p>
-    <div class="four columns panel" ng-repeat="status in statuses">
-      <h1>{{status.name}}</h1>
-      <p>Total {{groupped[status.name].length}}</p>
-
-      <ul class="tasks" ui-sortable="{connectWith:'.tasks', dropOnEmpty: true, update: syncModel}" ng-model="groupped[status.name]">
-        <li ng-repeat="task in groupped[status.name]">
-          <span>{{task.name}}</span>
-        </li>
-      </ul>
-    </div>
-
-    <form ng-submit="addTodo()">
-      <input type="text" ng-model="todoText"  size="30"
-             placeholder="add new task here">
-      <input class="btn-primary" type="submit" value="add">
-    </form>
+<div class="row">
+  <div class="four columns">
+    <h3>The kanban tracker</h3>
   </div>
+  <div class="eight columns">
+    <ul id="nav" class="nav-bar">
+      <li><a href="#" class="main">Boards</a></li>
+      <li><a href="" class="main">Profile</a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div ng-view></div>
+</div>
+
 </body>
 </html>
