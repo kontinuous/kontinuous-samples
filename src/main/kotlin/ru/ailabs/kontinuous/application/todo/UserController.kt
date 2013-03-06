@@ -43,7 +43,7 @@ object UserController {
         Ok(render("user/show.tmpl.html", hashMapOf("user" to user)))
     })
 
-    val update = Action({ ctx ->
+    val update = AuthorizeOwnerOrAdmin({ ctx ->
         val user = ctx.session.get(javaClass<User>(), ctx.namedParameters["uid"] as Serializable) as User
         val form = ctx.body.asMap()
         user.name = form["user"];
@@ -52,16 +52,16 @@ object UserController {
         Redirect("/users/${user.name}")
     })
 
-    val edit = Action({ ctx ->
+    val edit = AuthorizeOwnerOrAdmin({ ctx ->
         val user = ctx.session.get(javaClass<User>(), ctx.namedParameters["uid"] as Serializable) as User
-        Ok(render("user/new.tmpl.html", hashMapOf("users" to list)))
+        Ok(render("user/edit.tmpl.html", hashMapOf("user" to user)))
     })
 
-    val new = Action({
+    val new = AuthorizeAdmin({
         Ok(render("user/new.tmpl.html"))
     })
 
-    val create = Action({ ctx ->
+    val create = AuthorizeAdmin({ ctx ->
         val user = User()
         val form = ctx.body.asMap()
         user.name = form["user"];

@@ -28,3 +28,43 @@ class AuthorizeOwnerAndShared(val businessHandler: (Context) -> SimpleResult) : 
         }
     }
 }
+
+class AuthorizeOwnerOrAdmin(val businessHandler: (Context) -> SimpleResult) : Action(businessHandler) {
+    override public val handler: ((Context) -> SimpleResult) = { context ->
+        val currentUser = context.session.get(javaClass<User>(), context.userSession.getUserId() as Serializable) as User
+        val uid = context.namedParameters["uid"]
+
+        var canProcess = false
+        val isAdmin = if(currentUser.isAdmin == null) false else currentUser.isAdmin!!
+        if(isAdmin) {
+            canProcess = true
+        } else {
+            if (uid != null){
+                val user = context.session.get(javaClass<User>(), uid as Serializable) as User
+                if (currentUser.name == user.name) {
+                    canProcess = true
+                }
+            }
+        }
+
+        if(canProcess) {
+            businessHandler(context)
+        } else {
+            Forbidden()
+        }
+    }
+}
+
+class AuthorizeAdmin(val businessHandler: (Context) -> SimpleResult) : Action(businessHandler) {
+    override public val handler: ((Context) -> SimpleResult) = { context ->
+        val currentUser = context.session.get(javaClass<User>(), context.userSession.getUserId() as Serializable) as User
+
+        var canProcess = if(currentUser.isAdmin == null) false else currentUser.isAdmin!!
+
+        if(canProcess) {
+            businessHandler(context)
+        } else {
+            Forbidden()
+        }
+    }
+}
