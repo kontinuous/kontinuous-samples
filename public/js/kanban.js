@@ -17,9 +17,20 @@ function BoardEditCtrl($scope, Board, $routeParams, $location, User, $http) {
 
   $scope.boardId = $routeParams.boardId;
 
-  $scope.board = Board.get({boardId: $scope.boardId});
+  $scope.board = Board.get({boardId: $scope.boardId}, function() {
+    $scope.users = User.query(function(data, getResponseHeaders) {
+      angular.forEach($scope.board.sharedUsers, function(userInBoard) {
+        for(var i=0; i<data.length; i++) {
+          if(data[i].name === userInBoard.name) {
+            data.splice(i, 1);
+            break;
+          }
+        }
+      });
+    });
+  });
 
-  $scope.users = User.query();
+  //$scope.users = User.query();
 
   $scope.editorEnabled = false;
 

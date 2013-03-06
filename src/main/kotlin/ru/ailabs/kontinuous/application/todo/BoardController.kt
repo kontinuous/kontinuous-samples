@@ -41,17 +41,17 @@ object BoardController {
 
     val update = Action ({ context ->
         val newBoard = context.body.asJson(javaClass<Board>())!!
+        context.session.evict(newBoard)
         val oldBoard = context.session.get(javaClass<Board>(), newBoard.id as Serializable) as Board
         oldBoard.name = newBoard.name
 
-        for(sharedUser in oldBoard.sharedUsers) {
-            val find = newBoard.sharedUsers.filter { user -> user.name == sharedUser.name }
-            if(find.count() == 0) {
-                oldBoard.sharedUsers.remove(sharedUser)
-            }
+        val finded = oldBoard.sharedUsers.filter { oldUser ->
+            val find = newBoard.sharedUsers.filter { newUser -> newUser.name == oldUser.name }
+            find.count() == 0
         }
-        context.session.flush()
-        context.session.refresh(oldBoard)
+        for(sharedUser in finded) {
+            oldBoard.sharedUsers.remove(sharedUser)
+        }
 
         for(sharedUser in newBoard.sharedUsers) {
             val find = oldBoard.sharedUsers.filter { user -> user.name == sharedUser.name }
