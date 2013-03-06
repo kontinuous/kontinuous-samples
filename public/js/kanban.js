@@ -1,5 +1,17 @@
 var myapp = angular.module('kanban', ['ui','kanbanServices']);
 
+function ProfileCtrl($scope, User, $http) {
+  $http.get('/users/profile').success(function(data) {
+    $scope.user = data;
+  });
+  $http.get('/users/shared').success(function(data) {
+    $scope.shared_boards = data;
+  });
+  $http.get('/boards').success(function(data) {
+    $scope.my_boards = data;
+  });
+}
+
 function BoardCtrl($scope, Board) {
 
   $scope.boards = Board.query();
@@ -64,7 +76,7 @@ function TaskCtrl($scope, Task, $routeParams) {
 
   $scope.updateModel = function() {
     return Task.query({boardId:$scope.boardId}, function(tasks, getResponseHeaders) {
-      $scope.groupped = {}
+      $scope.groupped = {};
       angular.forEach($scope.statuses, function(status) {
         $scope.groupped[status.name] = []
       });

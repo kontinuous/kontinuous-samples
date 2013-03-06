@@ -10,6 +10,7 @@ import java.io.Serializable
 import ru.ailabs.kontinuous.auth.authenticate
 import ru.ailabs.kontinuous.auth.unauthenticate
 import ru.ailabs.kontinuous.controller.helper.render_json
+import ru.ailabs.kontinuous.auth.getUserId
 
 /**
  * User: andrew
@@ -22,8 +23,19 @@ object UserController {
 
     val list = Action({ ctx ->
         val query = ctx.session.createQuery("from User")
-        val list = query?.list() as List<out User>
+        val list = query?.list() as List<User>
         Ok(render_json(list))
+    })
+
+    val profile = Action({ context ->
+        val user = context.session.get(javaClass<User>(), context.userSession.getUserId() as Serializable) as User
+        Ok(render_json(user))
+    })
+
+
+    val listShared = Action ({ context ->
+        val user = context.session.get(javaClass<User>(), context.userSession.getUserId() as Serializable) as User
+        Ok(render_json(user.theirsBoards))
     })
 
     val show = Action({ ctx ->

@@ -13,5 +13,6 @@ angular.module('kanbanServices', ['ngResource']).
           when('/boards', {templateUrl: 'partials/boards-list.html',   controller: BoardCtrl}).
           when('/boards/:boardId', {templateUrl: 'partials/board-details.html', controller: TaskCtrl}).
           when('/boards/:boardId/edit', {templateUrl: 'partials/board-edit.html', controller: TaskCtrl}).
+          when('/profile', {templateUrl: 'partials/user-details.html', controller: ProfileCtrl }).
           otherwise({redirectTo: '/boards'});
     }]);

@@ -25,6 +25,8 @@ class SampleApplication: Application() {
 
                 //user
                 get("/users/new", UserController.new)
+                get("/users/profile", UserController.profile)
+                get("/users/shared", UserController.listShared)
                 get("/users", UserController.list)
                 get("/users/:uid", UserController.show)
                 get("/users/:uid/edit", UserController.edit)
@@ -33,7 +35,6 @@ class SampleApplication: Application() {
 
                 get("/boards", BoardController.list)
                 get("/boards/:bid", BoardController.show)
-                get("/boards/:bid/shared_with", BoardController.shared)
                 post("/boards/:bid", BoardController.update)
                 post("/boards", BoardController.create)
 

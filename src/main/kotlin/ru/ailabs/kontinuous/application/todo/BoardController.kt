@@ -71,10 +71,4 @@ object BoardController {
         val board = context.session.get(javaClass<Board>(), context.namedParameters["bid"]!!.toLong() as Serializable) as Board
         Ok(render_json(board))
     })
-
-    val shared = Action ({ context ->
-        val board = context.session.get(javaClass<Board>(), context.namedParameters["bid"]!!.toLong() as Serializable) as Board
-        val sharedWith = board.sharedUsers
-        Ok(render_json(sharedWith))
-    })
 }
