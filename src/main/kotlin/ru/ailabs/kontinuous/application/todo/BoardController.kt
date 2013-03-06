@@ -14,6 +14,7 @@ import ru.ailabs.kontinuous.application.todo.model.User
 import java.io.Serializable
 import ru.ailabs.kontinuous.controller.helper.render
 import java.util.HashMap
+import ru.ailabs.kontinuous.controller.Forbidden
 
 /**
  * User: andrew
@@ -40,34 +41,43 @@ object BoardController {
     })
 
     val update = Action ({ context ->
-        val newBoard = context.body.asJson(javaClass<Board>())!!
-        context.session.evict(newBoard)
-        val oldBoard = context.session.get(javaClass<Board>(), newBoard.id as Serializable) as Board
-        oldBoard.name = newBoard.name
+        // TODO: refactor it to autorization
+        val board = context.session.get(javaClass<Board>(), context.namedParameters["bid"]!!.toLong() as Serializable) as Board
+        val user = context.session.get(javaClass<User>(), context.userSession.getUserId() as Serializable) as User
+        var canProcess = board.owner?.name == user.name
 
-        val finded = oldBoard.sharedUsers.filter { oldUser ->
-            val find = newBoard.sharedUsers.filter { newUser -> newUser.name == oldUser.name }
-            find.count() == 0
-        }
-        for(sharedUser in finded) {
-            oldBoard.sharedUsers.remove(sharedUser)
-        }
+        if(canProcess) {
+            val newBoard = context.body.asJson(javaClass<Board>())!!
+            context.session.evict(newBoard)
+            val oldBoard = context.session.get(javaClass<Board>(), newBoard.id as Serializable) as Board
+            oldBoard.name = newBoard.name
 
-        for(sharedUser in newBoard.sharedUsers) {
-            val find = oldBoard.sharedUsers.filter { user -> user.name == sharedUser.name }
-            if(find.count() == 0) {
-                val userName = sharedUser.name
-                val user = context.session.get(javaClass<User>(), userName as Serializable) as User
-                oldBoard.sharedUsers.add(user)
+            val finded = oldBoard.sharedUsers.filter { oldUser ->
+                val find = newBoard.sharedUsers.filter { newUser -> newUser.name == oldUser.name }
+                find.count() == 0
             }
-        }
+            for(sharedUser in finded) {
+                oldBoard.sharedUsers.remove(sharedUser)
+            }
 
-        context.session.save(oldBoard)
-        context.session.flush()
-        Ok(render_json(oldBoard))
+            for(sharedUser in newBoard.sharedUsers) {
+                val find = oldBoard.sharedUsers.filter { user -> user.name == sharedUser.name }
+                if(find.count() == 0) {
+                    val userName = sharedUser.name
+                    val user = context.session.get(javaClass<User>(), userName as Serializable) as User
+                    oldBoard.sharedUsers.add(user)
+                }
+            }
+
+            context.session.save(oldBoard)
+            context.session.flush()
+            Ok(render_json(oldBoard))
+        } else {
+            Forbidden()
+        }
     })
 
-    val show = Action ({ context ->
+    val show = AuthorizeOwnerAndShared ({ context ->
         val board = context.session.get(javaClass<Board>(), context.namedParameters["bid"]!!.toLong() as Serializable) as Board
         Ok(render_json(board))
     })
