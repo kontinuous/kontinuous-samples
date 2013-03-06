@@ -16,7 +16,7 @@ function BoardCtrl($scope, Board) {
 
   $scope.boards = Board.query();
 
-  $scope.addBoard = function() {
+  $scope.saveBoard = function() {
     var newBoard = new Board({name:$scope.boardName});
     newBoard.$save(function() {
       $scope.boards = Board.query();
@@ -71,7 +71,6 @@ function BoardEditCtrl($scope, Board, $routeParams, $location, User, $http) {
 }
 
 function TaskCtrl($scope, Task, $routeParams) {
-
   $scope.boardId = $routeParams.boardId;
 
   $scope.updateModel = function() {

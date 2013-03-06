@@ -1,6 +1,7 @@
-<div class="eight columns">
-  <h4>My Boards:</h4>
-  <div ng-controller="BoardCtrl">
+<div class="row">
+<div ng-controller="BoardCtrl">
+  <div class="large-8 columns">
+    <h4>My Boards:</h4>
     <ul>
       <li ng-repeat="board in boards">
         <span><a href="#/boards/{{board.id}}">{{board.name}}</a></span>
@@ -8,14 +9,21 @@
       </li>
     </ul>
 
-    <form ng-submit="addBoard()">
-      <input type="text" ng-model="boardName"  size="30"
-             placeholder="add new board name here">
-      <input class="btn-primary" type="submit" value="add">
+    <form>
+      <div class="row collapse">
+        <div class="small-10 columns">
+          <input type="text" ng-model="boardName" placeholder="add new board name here" required>
+        </div>
+        <div class="small-2 columns">
+          <a class="button prefix" type="submit" ng-click="saveBoard()">Add</a>
+        </div>
+      </div>
     </form>
   </div>
+
+  <div class="large-4 columns">
+    <h4>User info:</h4>
+    <p>Name: alex</p>
+  </div>
 </div>
-<div class="four columns">
-  <h4>User info:</h4>
-  <p>Name: alex</p>
 </div>

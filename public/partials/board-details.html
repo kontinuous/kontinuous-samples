@@ -1,5 +1,6 @@
+<div class="row">
 <div ng-controller="TaskCtrl">
-  <div class="four columns panel" ng-repeat="status in statuses">
+  <div class="large-4 columns panel" ng-repeat="status in statuses">
     <h1>{{status.name}}</h1>
     <p>Total {{groupped[status.name].length}}</p>
 
@@ -9,10 +10,15 @@
       </li>
     </ul>
   </div>
-
   <form ng-submit="addTodo()">
-    <input type="text" ng-model="todoText"  size="30"
-           placeholder="add new task here">
-    <input class="btn-primary" type="submit" value="add">
+    <div class="row collapse">
+      <div class="small-10 columns">
+        <input type="text" ng-model="todoText" placeholder="add new task here">
+      </div>
+      <div class="small-2 columns">
+        <input type="button" class="button prefix"  value="Add">
+      </div>
+    </div>
   </form>
+</div>
 </div>

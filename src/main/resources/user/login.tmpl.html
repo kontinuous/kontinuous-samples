@@ -1,5 +1,24 @@
-<form action="/login" method="post">
-    <p>Name: <input type="text" name="user"></p>
-    <p>Passowrd: <input type="password" name="pass"></p>
-    <p><input type="submit" value="Login" name="submit"></p>
-</form>
+<html>
+<head>
+  <link rel="stylesheet" href="/assets/stylesheets/foundation.min.css" />
+  <link rel="stylesheet" href="/assets/stylesheets/app.css" />
+</head>
+<body>
+  <div class="row">
+    <div class="centered eight columns ailabs-header"><h1>AiLabs Kanban Tracker</h1></div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+    </div>
+    <div class="four columns">
+      <form action="/login" method="post">
+        <p>Name: <input type="text" name="user"></p>
+        <p>Passowrd: <input type="password" name="pass"></p>
+        <p><input type="submit" value="Login" name="submit"></p>
+      </form>
+    </div>
+    <div class="four columns">
+    </div>
+  </div>
+</body>
+</html>
