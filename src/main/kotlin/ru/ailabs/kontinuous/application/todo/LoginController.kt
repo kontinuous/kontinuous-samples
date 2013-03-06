@@ -27,7 +27,7 @@ object LoginController {
         if(user == null) {
             Redirect("/login")
         } else {
-            if (form["pass"] == user.password) {
+            if (user.authenticate(form["pass"]!!)) {
                 ctx.userSession.authenticate(user.name!!)
                 Redirect("/")
             } else {

@@ -16,6 +16,7 @@
     <class name="ru.ailabs.kontinuous.application.todo.model.User">
         <id name="name" unsaved-value="null"/>
         <property name="password"/>
+        <property name="salt"/>
         <set name="theirsBoards" table="user_board">
             <key column="user_name"/>
             <many-to-many class="ru.ailabs.kontinuous.application.todo.model.Board" column="board_id"/>

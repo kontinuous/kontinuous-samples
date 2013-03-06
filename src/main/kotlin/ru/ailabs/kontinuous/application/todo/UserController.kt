@@ -47,7 +47,7 @@ object UserController {
         val user = ctx.session.get(javaClass<User>(), ctx.namedParameters["uid"] as Serializable) as User
         val form = ctx.body.asMap()
         user.name = form["user"];
-        user.password = form["pass"];
+        user.password(form["pass"]!!);
         ctx.session.save(user);
         Redirect("/users/${user.name}")
     })
@@ -65,7 +65,7 @@ object UserController {
         val user = User()
         val form = ctx.body.asMap()
         user.name = form["user"];
-        user.password = form["pass"];
+        user.password(form["pass"]!!);
         ctx.session.save(user)
         Redirect("/users/${user.name}")
     })
