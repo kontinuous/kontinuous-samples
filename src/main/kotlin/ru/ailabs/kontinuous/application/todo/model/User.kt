@@ -15,6 +15,7 @@ data class User : SecuredUser() {
     public var name : String? = null
     JsonIgnore public var password : String? = null
     JsonIgnore public var salt : String? = null
+    JsonIgnore public var isAdmin : Boolean? = false
     JsonIgnore public var theirsBoards : java.util.Set<Board> = HashSet<Board>() as java.util.Set<Board>
     JsonIgnore public var boards : java.util.Set<Board> = HashSet<Board>() as java.util.Set<Board>
 

@@ -51,6 +51,7 @@ class SampleApplication: Application() {
                     if (admin == null) {
                         val user = User()
                         user.name = "admin"
+                        user.isAdmin = true
                         user.password("admin")
                         session.save(user)
                     }
